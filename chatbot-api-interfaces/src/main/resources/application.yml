@@ -1,2 +1,8 @@
 server:
   port: 8090
+
+chatbot-api:
+  groupId: 28888225542111
+  cookie: zsxq_access_token=BC371116-1896-CEBC-3A91-D90C0556D918_CAB9A97C7045E4E3; abtest_env=product; zsxqsessionid=ea732f1c85a2c5c497ff43e6292e5c5c
+  sparkAppKey: 2343dced2bdae2b8524cba2e3af777e0
+  sparkAppSecret: MzkzYTZmNGQ5ZmZiODY4NWM2OWMwZjNk

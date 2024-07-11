@@ -8,6 +8,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ import java.io.IOException;
 public class ApiTest {
 
     @Test
-    public void queryUnanswerdQuestions() throws IOException {
+    public void queryUnAnsweredQuestions() throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
         HttpGet get = new HttpGet("https://api.zsxq.com/v2/groups/28888225542111/topics?scope=unanswered_questions&count=20");
@@ -64,4 +65,36 @@ public class ApiTest {
             System.out.println(response.getStatusLine().getStatusCode());
         }
     }
+
+    @Test
+    public void testSparkLite() throws IOException {
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+
+        HttpPost post = new HttpPost("https://spark-api-open.xf-yun.com/v1/chat/completions");
+        post.addHeader("Content-Type", "application/json");
+        post.addHeader("Authorization", "Bearer 2343dced2bdae2b8524cba2e3af777e0:MzkzYTZmNGQ5ZmZiODY4NWM2OWMwZjNk");
+
+        String paramJson = "{\n" +
+                "    \"model\":\"general\",\n" +
+                "    \"messages\": [\n" +
+                "        {\n" +
+                "            \"role\": \"user\",\n" +
+                "            \"content\": \"给我一个归并算法的Java代码\"\n" +
+                "        }\n" +
+                "    ]" +
+                "}";
+
+        StringEntity stringEntity = new StringEntity(paramJson, "UTF-8");
+        post.setEntity(stringEntity);
+
+        CloseableHttpResponse response = httpClient.execute(post);
+        if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+            String resStr = EntityUtils.toString(response.getEntity());
+            System.out.println("调用成功" + resStr);
+        } else {
+            System.out.println("\n调用失败：" + response + "\n响应状态码：" + response.getStatusLine().getStatusCode());
+        }
+    }
+
+
 }
